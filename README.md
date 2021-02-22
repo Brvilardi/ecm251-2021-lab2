@@ -2,7 +2,7 @@
 Repositório criado para a disciplina Linguagens de Programação I.
 
 # Desenvolvedor:
-## Bruno Vilardi Bueno
+- Bruno Vilardi Bueno
 
 # Linguagens e Frameworks
 - Python
