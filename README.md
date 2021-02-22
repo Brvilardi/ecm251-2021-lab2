@@ -7,5 +7,5 @@ Repositório criado para a disciplina Linguagens de Programação I.
 # Linguagens e Frameworks
 - Python
 - Java
-
+- Django
 - C
