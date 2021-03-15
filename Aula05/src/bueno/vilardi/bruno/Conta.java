@@ -2,9 +2,15 @@ package bueno.vilardi.bruno;
 
 public class Conta {
     //Atributos da Classe
-    private Cliente cliente = new Cliente();
+    private Cliente cliente;
     private double saldo;
     private int numero;
+
+    public Conta(String nome, double saldoInicial, int numero) {
+        this.saldo = saldoInicial;
+        this.numero = numero;
+        this.cliente = new Cliente(nome);
+    }
 
     //Métodos da Classe
 
@@ -28,8 +34,8 @@ public class Conta {
         return false;
     }
 
-    public void visualizarSaldo(){
-        System.out.println("Saldo atual: R$ " + this.saldo);
+    public double getSaldo(){
+        return this.saldo;
     }
 
     @Override
