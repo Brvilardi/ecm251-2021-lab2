@@ -1,7 +1,7 @@
 package bueno.vilardi.bruno;
 
 public class Conta {
-    private int id;
+    public int id;
     private double saldo;
     private Usuario proprietario;
     private static int contador = 1;
@@ -15,11 +15,15 @@ public class Conta {
     }
 
     @Override
-    public String toString() {
+    public static String toString() {
         return "Conta{" +
                 "id=" + this.id +
                 ", saldo=" + this.saldo +
                 '}';
     }
+
+    
+
+
 }
 

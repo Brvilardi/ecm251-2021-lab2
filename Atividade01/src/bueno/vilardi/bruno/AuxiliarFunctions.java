@@ -3,6 +3,7 @@ package bueno.vilardi.bruno;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 public class AuxiliarFunctions {
 //=================================Hashing======================================================
@@ -30,3 +31,7 @@ public class AuxiliarFunctions {
 }
 //Source: https://www.baeldung.com/sha-256-hashing-java
 //======================================================================================
+public static int getRandomNumberInRange(int min, int max) {
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+}

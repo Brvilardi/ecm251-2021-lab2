@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
-    private String nomeComleto;
-    private String email;
+    public String nomeComleto;
+    public String email;
     private String senha;
     private ArrayList<Conta> contas = new ArrayList<>();
 
