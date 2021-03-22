@@ -1,15 +1,17 @@
 package bueno.vilardi.bruno;
 
 public class Conta {
-    int id;
-    double saldo;
-    Usuario proprietario;
+    private int id;
+    private double saldo;
+    private Usuario proprietario;
+    private static int contador = 1;
 
-    public Conta(int id, double saldo, Usuario proprietario) {
-        this.id = id;
+    public Conta(double saldo, Usuario proprietario) {
+        this.id = Conta.contador;
         this.saldo = saldo;
         this.proprietario = proprietario;
         proprietario.atribuirConta(this);
+        contador++;
     }
 
     @Override
