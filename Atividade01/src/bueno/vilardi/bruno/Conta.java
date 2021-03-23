@@ -7,7 +7,7 @@ import java.util.Map;
 public class Conta {
     public int id;
     private double saldo;
-    public Usuario proprietario;
+    private Usuario proprietario;
     private static int contador = 1; //Controla o id das contas
     private static ArrayList<Conta> contas = new ArrayList<>(); //Keep track de todas as contas criadas
 
@@ -20,11 +20,11 @@ public class Conta {
         contador++;
     }
 
-    public void adicionarDinheiro(double valor){ //Adiciona valor no saldo da conta
+    private void adicionarDinheiro(double valor){ //Adiciona valor no saldo da conta
         this.saldo += valor;
     }
 
-    public boolean retirarDinheiro(double valor){ //Retira dinheiro do saldo conta se possível - retorna se deu certo
+    private boolean retirarDinheiro(double valor){ //Retira dinheiro do saldo conta se possível - retorna se deu certo
         if(valor <= this.saldo){
             this.saldo -= valor;
             return true;
@@ -59,6 +59,10 @@ public class Conta {
             }
         }
         return null;
+    }
+
+    public String getNomeProprietario(){
+        return this.proprietario.nomeComleto;
     }
 
     @Override

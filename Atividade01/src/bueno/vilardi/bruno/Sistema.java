@@ -1,6 +1,23 @@
 package bueno.vilardi.bruno;
 
+/*TO DO:
+
+-Desenhar menu com opcoes para modo administardor, login de usuario e desligar
+- cada entrada do menu é possivel dar logout
+
+-administrador terá uma senha = "teste123"
+
+-administrador pode criar usuarios, contas e fazer transferencias de qlq conta de qlq conta
+
+-usuario pode criar contas e fazer transferencias(só pode criar requests para suas contas e só pode pagar usando suas contas)
+
+
+ */
+
+
 public class Sistema {
+
+    //Roda o programa com ações definidas para testar o funcionamento
     public static void debug() {
         System.out.println("Inicializando sistema...");
 
@@ -70,14 +87,14 @@ public class Sistema {
         System.out.println("Transferencia conluida: " + resultado);
         System.out.println("------------------------------------------------");
 
-
     }
 
+    //Roda o programa principal
     public static void run(){
 
-
     }
 
+    //Desenha o menu inicial
     public static void mostrarMenuInicial(){
 
     }
