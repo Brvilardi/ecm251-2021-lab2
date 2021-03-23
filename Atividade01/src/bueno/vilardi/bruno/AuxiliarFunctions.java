@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class AuxiliarFunctions {
-//=================================Hashing======================================================
+    //=================================Hashing======================================================
     public static String hashString(String string){
         MessageDigest digest = null;
         try {
@@ -28,10 +28,12 @@ public class AuxiliarFunctions {
         }
         return hexString.toString();
     }
-}
-//Source: https://www.baeldung.com/sha-256-hashing-java
-//======================================================================================
-public static int getRandomNumberInRange(int min, int max) {
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
+
+    //Source: https://www.baeldung.com/sha-256-hashing-java
+    //======================================================================================
+    public static int getRandomNumberInRange(int min, int max) {
+            Random r = new Random();
+            return r.nextInt((max - min) + 1) + min;
+    }
+
 }
