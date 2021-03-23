@@ -33,16 +33,19 @@ public class Conta {
     }
 
     public boolean transferirDinheiro(String s){ //Transfere dinheiro com os parametros da string do QR Code
+
+        //Carrega os dados da string em variáveis locais
         String[] dados = s.split(";"); //Dados: "idConta;nomeUsuario;valor;numeroAleatorio"
         int idContaDestino = Integer.parseInt(dados[0]);
         String nomeUsuarioContaDestino = dados[1];
         double valor = Double.parseDouble(dados[2]);
         int idTransacao = Integer.parseInt(dados[3]);
 
-       System.out.println("Transferindo " + valor + " de " + this.proprietario.nomeComleto + " (Conta " + this.id + ") para " + nomeUsuarioContaDestino +
+        //Exibição visual da transferencia
+        System.out.println("Transferindo " + valor + " de " + this.proprietario.nomeComleto + " (Conta " + this.id + ") para " + nomeUsuarioContaDestino +
                "(Conta " + idContaDestino + ") - transação id " + idTransacao);
 
-       if (this.retirarDinheiro(valor)){
+        if (this.retirarDinheiro(valor)){
             Conta.getConta(idContaDestino).adicionarDinheiro(valor);
             return true;
         }
@@ -61,10 +64,10 @@ public class Conta {
     @Override
     public String toString() {
         return "Conta{" +
-                "id=" + this.id +
-                ", saldo=" + this.saldo +
+                "id=" + id +
+                ", saldo=" + saldo +
+                ", proprietario=" + proprietario.nomeComleto +
                 '}';
     }
-
 }
 

@@ -10,8 +10,7 @@ public class Transferencia {
         return "" + recebedora.id + ";" + recebedora.proprietario.nomeComleto + ";"+ valor + ";" + AuxiliarFunctions.getRandomNumberInRange(1000, 9999);
     }
 
-    public static boolean realizarTransferencia(Conta pagadora, Conta recebedora, double valor){ //Tenta realizar a tranferencia entre as contas especificadas - retorna se deu certo
-        String string = gerarString(recebedora, valor);
-        return pagadora.transferirDinheiro(string);
+    public static boolean realizarTransferencia(Conta pagadora, String requisicao){ //Tenta realizar a tranferencia entre a conta pagadora e a requisicao - retorna se deu certo
+        return pagadora.transferirDinheiro(requisicao);
     }
 }
