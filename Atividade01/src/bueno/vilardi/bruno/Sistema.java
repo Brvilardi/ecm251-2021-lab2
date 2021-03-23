@@ -15,7 +15,11 @@ package bueno.vilardi.bruno;
  */
 
 
+import java.util.Scanner;
+
 public class Sistema {
+    public static int menu = 0; //seleciona o menu inicial
+    public static Usuario usuarioLogado = null; //inicia usuario como ninguem
 
     //Roda o programa com ações definidas para testar o funcionamento
     public static void debug() {
@@ -91,12 +95,63 @@ public class Sistema {
 
     //Roda o programa principal
     public static void run(){
+        Scanner scanner = new Scanner(System.in);
+        while(Sistema.menu != 3){
+            switch(Sistema.menu){
+                case 0:
+                    mostrarMenuInicial();
+                    break;
+                case 1:
+                    if (Sistema.usuarioLogado == null && Sistema.usuarioLogado.nomeComleto != "admin"){ //Verifica se usuário está logado no sistema
+                        logarUsuario(scanner);
+                    }
+                    mostrarMenuAdministrador();
+                case 2:
+                    if (Sistema.usuarioLogado == null){ //Verifica se usuário está logado no sistema
+                        logarUsuario(scanner);
+                    }
+                    mostrarMenuUsuario();
+                default:
+                    System.out.println("Tecla errada ou opção ainda não desenvolvida");
+            }
+            System.out.println("Digite uma opção: ");
+            Sistema.menu = scanner.nextInt();
+        }
+
+
+    }
+
+    private static void mostrarMenuUsuario() {
+    }
+
+    private static void logarUsuario(Scanner scanner){
+        System.out.println("Por favor, insira suas credenciais:");
+        System.out.println("Nome:");
+        String nomeUsuario = scanner.next();
+        if (nomeUsuario == "0"){
+            Sistema.menu = 0;
+            return;
+        }
+        System.out.println("Senha: ");
+        String senha = scanner.next();
+        if (Usuario.autenticarUsuario("nome", "senha")){
+            System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " logado com sucesso!");
+        }
+    }
+
+    private static void mostrarMenuAdministrador() {
+
 
     }
 
     //Desenha o menu inicial
     public static void mostrarMenuInicial(){
-
+        System.out.println("Por favor, escolha uma opção:");
+        System.out.println("1 - Login como administrador");
+        System.out.println("2 - Login como usuário");
+        System.out.println("3 - Desligar");
     }
+
+
 
 }
