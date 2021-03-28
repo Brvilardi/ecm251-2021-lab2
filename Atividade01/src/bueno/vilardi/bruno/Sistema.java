@@ -244,6 +244,11 @@ public class Sistema {
                  System.out.println("String do pedido de transferência: ");
                  String pedidoTranferencia = scanner.next();
 
+                 //Valida o pedido
+                 if (Transferencia.validarString(pedidoTranferencia)){
+                     System.out.println("Pedido inválido, por favor, verifique se o pedido de transferenca está no padrao <id>;<nome>;<valor>;<numeroAleatorio>");
+                 }
+
                  //Mostra a lista de contas do usuário e pergunta qual é a desejada para sair a transferencia
                  System.out.println("Suas contas disponíveis:");
                  System.out.println(Usuario.getContas(Sistema.usuarioLogado));

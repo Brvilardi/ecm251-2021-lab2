@@ -70,6 +70,14 @@ public class Conta {
         return null;
     }
 
+    public static boolean comparaIdProprietario(int id, String nome){
+        Conta conta = getConta(id);
+        if (conta == null){
+            return false;
+        }
+        return conta.proprietario.nomeComleto.equals(nome);
+    }
+
     public String getNomeProprietario(){
         return this.proprietario.nomeComleto;
     }
