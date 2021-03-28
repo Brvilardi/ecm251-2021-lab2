@@ -82,5 +82,9 @@ public class Conta {
                 ", proprietario=" + proprietario.nomeComleto +
                 '}';
     }
+
+    public boolean saldoIgual(int i) {
+        return this.saldo == i;
+    }
 }
 

@@ -2,15 +2,6 @@ package bueno.vilardi.bruno;
 
 /*TO DO:
 
--Desenhar menuGeral com opcoes para modo administardor, login de usuario e desligar
-- cada entrada do menuGeral é possivel dar logout
-
--administrador terá uma senha = "teste123"
-
--administrador pode criar usuarios, contas e fazer transferencias de qlq conta de qlq conta
-
--usuario pode criar contas e fazer transferencias(só pode criar requests para suas contas e só pode pagar usando suas contas)
-
 
  */
 
@@ -92,10 +83,17 @@ public class Sistema {
         System.out.println("Transferencia conluida: " + resultado);
         System.out.println("------------------------------------------------");
 
+        //Final dos testes
+         System.out.println("\n\nResultado dos testes: ");
+         System.out.println("Usuario 1 - saldo = 1500,00 ... " + contaBruno.saldoIgual(1500));
+         System.out.println("Usuario 2 - saldo = 1000,00 ... " + contaMatheus.saldoIgual(1000));
+         System.out.println("Usuario 3 - saldo = 1750,00 ... " + contaMartin.saldoIgual(1750));
+
     }
 
     //Roda o programa principal
     public static void run(){
+        System.out.println("Inicializando sistema...");
         //Cria usuário administrador
         new Usuario("admin", "senha forte", "admin@admin.com");
 
