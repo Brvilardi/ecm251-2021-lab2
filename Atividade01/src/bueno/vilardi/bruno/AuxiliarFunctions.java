@@ -37,3 +37,22 @@ public class AuxiliarFunctions {
     }
 
 }
+
+/*
+
+étodo main, para fins de teste:
+o Crie três usuários
+o Cada um com uma conta (valores iniciais de
+saldo: 1000, 250, 3000)
+o As seguintes operações, se elas foram
+possíveis:
+▪ Usuário 1 gera uma operação de recebimento
+de 250;
+▪ Usuário 2 paga a requisição do usuário 1;
+▪ Usuário 3 paga a requisição do usuário 1;
+▪ Usuário 2 paga a requisição do usuário 1;
+▪ Usuário 2 gera uma operação de recebimento
+de 1000;
+▪ Usuário 3 paga a requisição do usuário 2.
+
+ */
