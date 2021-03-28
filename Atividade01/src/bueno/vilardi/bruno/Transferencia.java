@@ -1,7 +1,5 @@
 package bueno.vilardi.bruno;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Transferencia {
 
