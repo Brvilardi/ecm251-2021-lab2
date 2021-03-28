@@ -126,6 +126,7 @@ public class Sistema {
                         logarUsuario(scanner);
                     } else {
                         mostrarMenuUsuario(scanner);
+                        analisarMenuUsuario(scanner);
                     }
                     break;
                 default:
@@ -208,8 +209,67 @@ public class Sistema {
         System.out.println("1 - Exibir minhas contas");
         System.out.println("2 - Criar pedido de transferencia");
         System.out.println("3 - Realizar tranferência");
-        System.out.println("5 - Logout");
+        System.out.println("4 - Logout");
         Sistema.menuEspecifico = scanner.nextInt();
+    }
+
+    private static void analisarMenuUsuario(Scanner scanner) {
+         switch(Sistema.menuEspecifico){
+             case 1: //Exibir contas
+                 System.out.println(Usuario.getContas(Sistema.usuarioLogado));
+                 break;
+             case 2: //Criar pedido transferencia
+                 //Mostra a lista de contas do usuário e pergunta qual é a desejada para a transferencia
+                 System.out.println("Suas contas disponíveis:");
+                 System.out.println(Usuario.getContas(Sistema.usuarioLogado));
+                 System.out.println("\nPor favor, digite o id da conta desejada:");
+                 int idContaRecebedora = scanner.nextInt();
+
+                 //Verifica se usuário possui a conta informada
+                 if(!Sistema.usuarioLogado.possuiConta(idContaRecebedora)){
+                     System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " não possui conta com id " + idContaRecebedora);
+                     break;
+                 }
+
+                 //Pede o valor do pedido de transferencia
+                 System.out.println("Para criar uma requisição de transferencia, por favor, informe...");
+                 System.out.println("Valor: ");
+                 double valorPedidoTransferencia = scanner.nextDouble();
+
+                 //Cria o pedido de transferencia com todas as especificações
+                 String novoPedidoTransferencia = Transferencia.gerarString(Sistema.usuarioLogado.getContaPeloId(idContaRecebedora), valorPedidoTransferencia);
+                 System.out.println("String para pagamento: " + novoPedidoTransferencia);
+                 break;
+             case 3: //Realizar transferencia
+                 //Pede a string da transferencia
+                 System.out.println("Para realizar a transferência, por favor, informe...");
+                 System.out.println("String do pedido de transferência: ");
+                 String pedidoTranferencia = scanner.next();
+
+                 //Mostra a lista de contas do usuário e pergunta qual é a desejada para sair a transferencia
+                 System.out.println("Suas contas disponíveis:");
+                 System.out.println(Usuario.getContas(Sistema.usuarioLogado));
+                 System.out.println("\nPor favor, digite o id da conta desejada para realizar o pagamento:");
+                 int idContaPagadora = scanner.nextInt();
+
+                 //Verifica se usuário possui a conta informada
+                 if(!Sistema.usuarioLogado.possuiConta(idContaPagadora)){
+                     System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " não possui conta com id " + idContaPagadora);
+                     break;
+                 }
+
+                 if (Transferencia.realizarTransferencia(Sistema.usuarioLogado.getContaPeloId(idContaPagadora), pedidoTranferencia)){
+                     System.out.println("Transferencia realizada com sucesso!");
+                 } else{
+                     System.out.println("Não foi possível realizar a transferencia");
+                 }
+
+                 break;
+             case 4: //logout
+                 logout();
+                 break;
+
+         }
     }
 
     private static void logarUsuario(Scanner scanner){
@@ -228,7 +288,6 @@ public class Sistema {
             Sistema.menuGeral = 0;
             return;
         }
-        System.out.println("Senha digitada: " + senha);
         if (Usuario.autenticarUsuario(nomeUsuario, senha)){
             System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " logado com sucesso!");
         } else {

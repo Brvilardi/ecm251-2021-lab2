@@ -69,6 +69,10 @@ public class Usuario {
         return true;
     }
 
+    public static ArrayList<Conta> getContas(Usuario usuarioLogado) {
+        return usuarioLogado.contas;
+    }
+
     @Override
     public String toString() {
 
@@ -78,5 +82,23 @@ public class Usuario {
                 ", email='" + email + '\'' +
                 ", contas=" + contas +
                 '}';
+    }
+
+    public boolean possuiConta(int idContaRecebedora) { //Verifica se o usuario possui determinada conta
+        for (Conta i : this.contas) {
+            if (i.id == idContaRecebedora){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Conta getContaPeloId(int idConta) {
+        for (Conta i: this.contas){
+            if (i.id == idConta){
+                return i;
+            }
+        }
+        return null;
     }
 }
