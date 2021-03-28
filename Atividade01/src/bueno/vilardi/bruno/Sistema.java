@@ -199,6 +199,10 @@ public class Sistema {
              case 5: //Logout
                  Sistema.logout();
                  break;
+             default:
+                 System.out.println("Tecla errada ou opção ainda não desenvolvida");
+                 Sistema.menuEspecifico = 0;
+                 break;
          }
     }
 
@@ -272,6 +276,10 @@ public class Sistema {
              case 4: //logout
                  logout();
                  break;
+             default:
+                 System.out.println("Tecla errada ou opção ainda não desenvolvida");
+                 Sistema.menuEspecifico = 0;
+                 break;
 
          }
     }
@@ -293,7 +301,7 @@ public class Sistema {
             return;
         }
         if (Usuario.autenticarUsuario(nomeUsuario, senha) && nomeUsuario.equals("admin")){
-            System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " logado com sucesso!");
+            System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " logado com sucesso!\n");
         } else {
             System.out.println("Credenciais incorretas, tente novamente (ou pressione 'enter' para voltar ou menu principal)...\n");
         }
