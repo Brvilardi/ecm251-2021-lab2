@@ -113,7 +113,7 @@ public class Sistema {
                     //System.out.println(Usuario.getUsuarios());
                     if (Sistema.usuarioLogado == null || !Sistema.usuarioLogado.nomeComleto.equals("admin")){ //Verifica se usuário está logado no sistema ou se usuario não é admin
                         Sistema.usuarioLogado = null;
-                        logarUsuario(scanner);
+                        logarUsuario(scanner, 1); //com verificação de admin
                     } else {
                         mostrarMenuAdministrador(scanner);
                         analisarMenuAdministrador(scanner);
@@ -121,7 +121,7 @@ public class Sistema {
                     break;
                 case 2:
                     if (Sistema.usuarioLogado == null){ //Verifica se usuário está logado no sistema
-                        logarUsuario(scanner);
+                        logarUsuario(scanner, 0); //sem verificação de admin
                     } else {
                         mostrarMenuUsuario(scanner);
                         analisarMenuUsuario(scanner);
@@ -270,7 +270,7 @@ public class Sistema {
          }
     }
 
-    private static void logarUsuario(Scanner scanner){
+    private static void logarUsuario(Scanner scanner, int verificar){
         System.out.println("Por favor, insira suas credenciais.");
         System.out.println("Nome:");
         String nomeUsuario = scanner.next(); //recebe toda a linha, contando os espaços
@@ -286,7 +286,7 @@ public class Sistema {
             Sistema.menuGeral = 0;
             return;
         }
-        if (Usuario.autenticarUsuario(nomeUsuario, senha)){
+        if (Usuario.autenticarUsuario(nomeUsuario, senha) && nomeUsuario.equals("admin")){
             System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " logado com sucesso!");
         } else {
             System.out.println("Credenciais incorretas, tente novamente...\n");
