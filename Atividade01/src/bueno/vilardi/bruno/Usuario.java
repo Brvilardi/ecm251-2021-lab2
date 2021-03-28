@@ -1,10 +1,7 @@
 package bueno.vilardi.bruno;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Usuario {
     private static ArrayList<Usuario> usuarios = new ArrayList<>(); //Keep track de todas os usuarios criadas
@@ -13,16 +10,33 @@ public class Usuario {
     private String senha;
     private ArrayList<Conta> contas = new ArrayList<>();
 
-    public Usuario(String nomeComleto, String senha, String email) {
-        this.nomeComleto = nomeComleto;
-        this.email = email;
-        this.senha = AuxiliarFunctions.hashString(senha); //Não armazena a senha do usuário, armazena apenas o Hash - aumenta a segurança
 
+    public Usuario(String nomeComleto, String senha, String email) {
+        if (Usuario.naoExisteUsuario(nomeComleto)) {
+            this.nomeComleto = nomeComleto;
+            this.email = email;
+            this.senha = AuxiliarFunctions.hashString(senha); //Não armazena a senha do usuário, armazena apenas o Hash - aumenta a segurança
+            Usuario.usuarios.add(this);
+            System.out.println("Usuário " + nomeComleto + " Criado com sucesso!");
+        } else {
+            System.out.println("Não foi possível criar o usuário " + nomeComleto);
+        }
+
+
+    }
+
+    public static boolean naoExisteUsuario(String nomeComleto) {
+        for (Usuario i : Usuario.usuarios) {
+            if (i.nomeComleto.equals(nomeComleto)){
+                return false;
+            }
+        }
+        return true;
     }
 
     public static Usuario getUsuarioPeloNome(String nome){
         for(Usuario i : Usuario.usuarios){
-            if (i.nomeComleto == nome){
+            if (i.nomeComleto.equals(nome)){
                 return i;
             }
         }
@@ -35,11 +49,19 @@ public class Usuario {
             return false;
         }
         String senhaHash = AuxiliarFunctions.hashString(senha);
-        if (senhaHash == user.senha){
+        if (senhaHash.equals(user.senha)){
             Sistema.usuarioLogado = user;
             return true;
         }
         return false;
+    }
+
+    public static void exibirUsuarios(Usuario usuarioLogado) {
+        if (usuarioLogado.nomeComleto.equals("admin")){
+            System.out.println(Usuario.usuarios);
+        } else {
+            System.out.println("Usuário logado não tem permissão");
+        }
     }
 
     public boolean atribuirConta(Conta conta){
@@ -52,7 +74,7 @@ public class Usuario {
 
         return "Usuario{" +
                 "nomeComleto='" + nomeComleto + '\'' +
-                ", senha='" + senha + '\'' +
+                //", senha='" + senha + '\'' +
                 ", email='" + email + '\'' +
                 ", contas=" + contas +
                 '}';

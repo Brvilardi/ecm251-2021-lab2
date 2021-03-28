@@ -18,6 +18,15 @@ public class Conta {
         proprietario.atribuirConta(this); //Atribui a nova conta para a lista de contas daquele usuário
         Conta.contas.add(this);           //Atribui a nova conta para a lista de contas existentes no sistema
         contador++;
+        System.out.println("nova Conta (" + id + ") de " + proprietario.nomeComleto + " criada com sucesso!");
+    }
+
+    public static void exibirContas(Usuario usuarioLogado) {
+        if (usuarioLogado.nomeComleto.equals("admin")){
+            System.out.println(Conta.contas);
+        } else {
+            System.out.println("Usuário não tem permissões");
+        }
     }
 
     private void adicionarDinheiro(double valor){ //Adiciona valor no saldo da conta

@@ -2,8 +2,8 @@ package bueno.vilardi.bruno;
 
 /*TO DO:
 
--Desenhar menu com opcoes para modo administardor, login de usuario e desligar
-- cada entrada do menu é possivel dar logout
+-Desenhar menuGeral com opcoes para modo administardor, login de usuario e desligar
+- cada entrada do menuGeral é possivel dar logout
 
 -administrador terá uma senha = "teste123"
 
@@ -18,11 +18,12 @@ package bueno.vilardi.bruno;
 import java.util.Scanner;
 
 public class Sistema {
-    public static int menu = 0; //seleciona o menu inicial
+    public static int menuGeral = 0; //seleciona o menuGeral inicial
+    public static int menuEspecifico = 0; //seleciona o menuEspecifico inicial
     public static Usuario usuarioLogado = null; //inicia usuario como ninguem
 
     //Roda o programa com ações definidas para testar o funcionamento
-    public static void debug() {
+     public static void debug() {
         System.out.println("Inicializando sistema...");
 
         //Criação de Usuários-teste
@@ -95,62 +96,154 @@ public class Sistema {
 
     //Roda o programa principal
     public static void run(){
+        //Cria usuário administrador
+        new Usuario("admin", "senha forte", "admin@admin.com");
+
+        //Cria instância scanner para entrada do usuario via console
         Scanner scanner = new Scanner(System.in);
-        while(Sistema.menu != 3){
-            switch(Sistema.menu){
-                case 0:
+        scanner.useDelimiter("\n"); //scanner vai pegar strings com espaço
+
+        //Começa o laço de repetição do programa
+        while(Sistema.menuGeral != 3){ //Menu = 3 é para desligar o sistema
+            switch(Sistema.menuGeral){
+                case 0: //Menu não selecionado
                     mostrarMenuInicial();
+                    System.out.println("Digite uma opção: ");
+                    Sistema.menuGeral = scanner.nextInt();
                     break;
                 case 1:
-                    if (Sistema.usuarioLogado == null && Sistema.usuarioLogado.nomeComleto != "admin"){ //Verifica se usuário está logado no sistema
+                    //System.out.println(Usuario.getUsuarios());
+                    if (Sistema.usuarioLogado == null || !Sistema.usuarioLogado.nomeComleto.equals("admin")){ //Verifica se usuário está logado no sistema ou se usuario não é admin
+                        Sistema.usuarioLogado = null;
                         logarUsuario(scanner);
+                    } else {
+                        mostrarMenuAdministrador(scanner);
+                        analisarMenuAdministrador(scanner);
                     }
-                    mostrarMenuAdministrador();
+                    break;
                 case 2:
                     if (Sistema.usuarioLogado == null){ //Verifica se usuário está logado no sistema
                         logarUsuario(scanner);
+                    } else {
+                        mostrarMenuUsuario(scanner);
                     }
-                    mostrarMenuUsuario();
+                    break;
                 default:
                     System.out.println("Tecla errada ou opção ainda não desenvolvida");
+                    Sistema.menuGeral = 0;
+                    break;
             }
-            System.out.println("Digite uma opção: ");
-            Sistema.menu = scanner.nextInt();
-        }
-
-
-    }
-
-    private static void mostrarMenuUsuario() {
-    }
-
-    private static void logarUsuario(Scanner scanner){
-        System.out.println("Por favor, insira suas credenciais:");
-        System.out.println("Nome:");
-        String nomeUsuario = scanner.next();
-        if (nomeUsuario == "0"){
-            Sistema.menu = 0;
-            return;
-        }
-        System.out.println("Senha: ");
-        String senha = scanner.next();
-        if (Usuario.autenticarUsuario("nome", "senha")){
-            System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " logado com sucesso!");
         }
     }
 
-    private static void mostrarMenuAdministrador() {
-
-
-    }
-
-    //Desenha o menu inicial
+    //Desenha o menuGeral inicial
     public static void mostrarMenuInicial(){
         System.out.println("Por favor, escolha uma opção:");
         System.out.println("1 - Login como administrador");
         System.out.println("2 - Login como usuário");
         System.out.println("3 - Desligar");
     }
+
+    private static void mostrarMenuAdministrador(Scanner scanner) {
+        System.out.println("Por favor, escolha uma opção (administrador):");
+        System.out.println("1 - Criar usuário");
+        System.out.println("2 - Criar conta");
+        System.out.println("3 - Exibir usuários");
+        System.out.println("4 - Exibir contas");
+        System.out.println("5 - Logout");
+        Sistema.menuEspecifico = scanner.nextInt();
+    }
+
+    private static void analisarMenuAdministrador(Scanner scanner) {
+         switch (Sistema.menuEspecifico){
+             case 1: //Criar usuário
+                 //Entrada de dados do novo usuário
+                 System.out.println("\nPara criar um novo usuário, por favor, informe...");
+                 System.out.println("Nome completo:");
+                 String nomeNovoUsuario = scanner.next();
+                 System.out.println("Senha:");
+                 String senha = scanner.next();
+                 System.out.println("email:");
+                 String email = scanner.next();
+
+                 //Criação do novo usuario
+                 new Usuario(nomeNovoUsuario, senha, email);
+
+                 break;
+             case 2: //Criar conta
+                 //Entrada de dados da conta
+                 System.out.println("Para criar uma nova conta, por favor, informe...");
+                 System.out.println("Nome do usuario da conta: ");
+                 String nomeUsuarioConta = scanner.next();
+                 System.out.println("Confirme o nome: ");
+                 String nomeConfirma = scanner.next();
+                 if (!nomeUsuarioConta.equals(nomeConfirma)){ //Verifica se o nome de usuário foi digitado corretamente
+                     System.out.println("Os nomes não batem...");
+                     break;
+                 }
+                 if (Usuario.naoExisteUsuario(nomeUsuarioConta)){
+                     System.out.println("Usuario não existe...");
+                     break;
+                 }
+                 System.out.println("Saldo inicial: ");
+                 double saldoInicialConta = scanner.nextDouble();
+
+                 //Cria a conta
+                 new Conta(saldoInicialConta, Usuario.getUsuarioPeloNome(nomeUsuarioConta));
+                 break;
+             case 3: //Exibir usuários
+                 Usuario.exibirUsuarios(Sistema.usuarioLogado);
+                 break;
+             case 4: //Exibir contas
+                 Conta.exibirContas(Sistema.usuarioLogado);
+                 break;
+             case 5: //Logout
+                 Sistema.logout();
+                 break;
+         }
+    }
+
+    private static void mostrarMenuUsuario(Scanner scanner) {
+        System.out.println("Por favor, escolha uma opção (usuario):");
+        System.out.println("1 - Exibir minhas contas");
+        System.out.println("2 - Criar pedido de transferencia");
+        System.out.println("3 - Realizar tranferência");
+        System.out.println("5 - Logout");
+        Sistema.menuEspecifico = scanner.nextInt();
+    }
+
+    private static void logarUsuario(Scanner scanner){
+        System.out.println("Por favor, insira suas credenciais.");
+        System.out.println("Nome:");
+        String nomeUsuario = scanner.next(); //recebe toda a linha, contando os espaços
+        if (nomeUsuario.equals("")){
+            System.out.println("Nome de usuário não digitado, retornando ao menuGeral inicial");
+            Sistema.menuGeral = 0;
+            return;
+        }
+        System.out.println("Senha: ");
+        String senha = scanner.next();
+        if (senha.equals("")){
+            System.out.println("Senha não digitada, retornando ao menuGeral inicial");
+            Sistema.menuGeral = 0;
+            return;
+        }
+        System.out.println("Senha digitada: " + senha);
+        if (Usuario.autenticarUsuario(nomeUsuario, senha)){
+            System.out.println("Usuario " + Sistema.usuarioLogado.nomeComleto + " logado com sucesso!");
+        } else {
+            System.out.println("Credenciais incorretas, tente novamente...\n");
+        }
+    }
+
+    private static void logout() {
+        String nome = Sistema.usuarioLogado.nomeComleto;
+        Sistema.usuarioLogado = null;
+        Sistema.menuGeral = 0;
+        Sistema.menuEspecifico = 0;
+        System.out.println("Usuário " + nome + " deslogado com sucesso...\n\n");
+    }
+
 
 
 
