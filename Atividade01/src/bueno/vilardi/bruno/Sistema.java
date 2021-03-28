@@ -245,8 +245,9 @@ public class Sistema {
                  String pedidoTranferencia = scanner.next();
 
                  //Valida o pedido
-                 if (Transferencia.validarString(pedidoTranferencia)){
+                 if (!Transferencia.validarString(pedidoTranferencia)){
                      System.out.println("Pedido inválido, por favor, verifique se o pedido de transferenca está no padrao <id>;<nome>;<valor>;<numeroAleatorio>");
+                     break;
                  }
 
                  //Mostra a lista de contas do usuário e pergunta qual é a desejada para sair a transferencia
